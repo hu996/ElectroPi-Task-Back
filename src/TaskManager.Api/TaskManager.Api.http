@@ -1,0 +1,19 @@
+@TaskManager.Api_HostAddress = http://localhost:5135
+
+GET {{TaskManager.Api_HostAddress}}/api/projects
+Accept: application/json
+
+###
+
+POST {{TaskManager.Api_HostAddress}}/api/projects
+Content-Type: application/json
+
+{
+  "name": "Website Redesign",
+  "description": "Prepare a new company website"
+}
+
+###
+
+GET {{TaskManager.Api_HostAddress}}/api/tasks/status/ToDo
+Accept: application/json
