@@ -1,8 +1,10 @@
 using System.Text.Json.Serialization;
 using FluentValidation.AspNetCore;
+using Microsoft.EntityFrameworkCore;
 using TaskManager.Application;
 using TaskManager.Api.Middleware;
 using TaskManager.Infrastructure;
+using TaskManager.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +28,12 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    dbContext.Database.Migrate();
+}
 
 if (app.Environment.IsDevelopment())
 {
